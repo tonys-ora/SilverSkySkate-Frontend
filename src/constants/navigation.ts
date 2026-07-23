@@ -62,7 +62,7 @@ export const PROFILE_ITEMS: Navigation[] = [
     icon: 'headphone'
   },
   {
-    link: '/profile/logout',
+    link: '/logout',
     text: 'Log out',
     icon: 'logout'
   }

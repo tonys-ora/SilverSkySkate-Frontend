@@ -2,12 +2,14 @@ import { AppBar, Avatar, IconButton, Stack, styled, tabsClasses } from '@mui/mat
 import MuiToolbar from '@mui/material/Toolbar'
 import * as React from 'react'
 
+import { useDialog, useIsLoggedIn } from '@/hooks'
 import avatarUrl from '@/assets/images/avatar.png'
 import AppIcon from '@/components/Core/AppIcon'
 import Logo from '@/components/Core/Logo'
 
 import NavSideBarMobile from '../Sidebar/NavSideBarMobile'
 import ProfileDropdown from './ProfileDropdown'
+import { LoginButton } from './LoginButton'
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
@@ -28,6 +30,12 @@ const Toolbar = styled(MuiToolbar)({
 export default function AppNavbar() {
   const [navOpen, setNavOpen] = React.useState(false)
   const [profileOpen, setProfileOpen] = React.useState(false)
+  const isLoggedIn = useIsLoggedIn()
+  const { openDialog } = useDialog()
+
+  const handleLogin = () => {
+    openDialog('auth')
+  }
 
   const navToggleDrawer = (newOpen: boolean) => () => {
     setNavOpen(newOpen)
@@ -72,9 +80,13 @@ export default function AppNavbar() {
             <IconButton size='small'>
               <AppIcon name='sports' size={16}></AppIcon>
             </IconButton>
-            <IconButton size='small' onClick={profileToggleDrawer(true)}>
-              <Avatar alt='user' src={avatarUrl} sx={{ width: '30px', height: '30px' }} />
-            </IconButton>
+            {!isLoggedIn ? (
+              <LoginButton onClick={handleLogin} />
+            ) : (
+              <IconButton size='small' onClick={profileToggleDrawer(true)}>
+                <Avatar alt='user' src={avatarUrl} sx={{ width: '30px', height: '30px' }} />
+              </IconButton>
+            )}
           </Stack>
         </Stack>
       </Toolbar>

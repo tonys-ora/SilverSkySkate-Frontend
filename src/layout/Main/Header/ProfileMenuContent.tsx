@@ -4,17 +4,22 @@ import { useNavigate } from 'react-router-dom'
 import AppIcon from '@/components/Core/AppIcon'
 import { PROFILE_ITEMS } from '@/constants'
 import { colors } from '@/theme'
+import { useLogout } from '@/hooks'
 
 interface ProfileMenuItemsProps {
   handleClose: () => void
 }
 
 export default function ProfileMenuContent({ handleClose }: ProfileMenuItemsProps) {
+  const logout = useLogout()
   const navigate = useNavigate()
 
   const handleNavigate = (link: string) => {
     handleClose()
-    navigate(link)
+    if (link === '/logout') {
+      logout()
+    }
+    else navigate(link)
   }
 
   return (

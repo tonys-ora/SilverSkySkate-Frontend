@@ -8,6 +8,7 @@ import Home from '@/pages/Home'
 import NotFound from '@/pages/Others/NotFound'
 
 import { profileRoutes } from './profile'
+import PrivateRoute from './PrivateRoute'
 
 const router = createBrowserRouter([
   {
@@ -30,8 +31,16 @@ const router = createBrowserRouter([
         path: ROUTES.NOT_FOUND,
         element: <NotFound />
       },
-      ...profileRoutes
     ]
+  },
+  {
+    path: '/',
+    element: (
+      <PrivateRoute>
+        <Layout />
+      </PrivateRoute>
+    ),
+    children: [...profileRoutes]
   }
 ])
 
